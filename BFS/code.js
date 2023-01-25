@@ -1,0 +1,27 @@
+var graph = {};
+graph["you"] = ["alice", "bob", "claire"];
+graph["bob"] = ["anuj", "peggy"];
+graph["alice"] = ["peggy"];
+graph["claire"] = ["tom", "jenny"];
+graph["anuj"] = [];
+graph["peggy"] = [];
+graph["tom"] = [];
+graph["jenny"] = [];
+function personIsSeller(name) {
+    return name[name.length - 1] === "m";
+}
+function bfs_search(name) {
+    var searchQueue = graph[name];
+    var searched = [];
+    while (searchQueue) {
+        var person = searchQueue.shift();
+        if (!searched.includes(person)) {
+            if (personIsSeller(person))
+                return true;
+            searchQueue.push.apply(searchQueue, graph[person]);
+            searched.push(person);
+        }
+    }
+    return false;
+}
+console.log(bfs_search("you"));
